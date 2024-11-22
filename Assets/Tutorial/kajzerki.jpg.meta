@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      kajzerki_0: 6150624526352817533
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      inny_chleb_0: -2562069257026302276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
