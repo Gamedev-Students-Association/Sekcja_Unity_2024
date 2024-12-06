@@ -1,38 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class temporaryplayer : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public CoinManager coinManager;
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Rigidbody2D rigidBody;
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private UIManager uiManager;
+    
+    private Rigidbody2D rb;
+    private bool isGrounded;
+    private float horizontalInput;
+    private int coins = 0;
 
-    private Vector3 input;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        uiManager.UpdateCoinDisplay(coins);
+    }
 
     private void Update()
     {
-        float inputx = Input.GetAxis("Horizontal");
-        float inputy = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
 
-        input = new Vector3(inputx, inputy, 0);
-        transform.position += input * Time.deltaTime * moveSpeed;
-    }
-
-        private void FixedUpdate()
-    {
-        Vector3 move = input * moveSpeed * Time.fixedDeltaTime;
-        rigidBody.linearVelocity = new Vector2(move.x, rigidBody.linearVelocity.y);
-
-        rigidBody.MovePosition(transform.position + move);
-    }
-    void onTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Coin")
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            Destroy(other.gameObject);
-            coinManager.coinCount++;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(horizontalInput * moveSpeed, rb.linearVelocity.y);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            coins++;
+            uiManager.UpdateCoinDisplay(coins);
+            Destroy(other.gameObject);
+        }
+    }
 }
