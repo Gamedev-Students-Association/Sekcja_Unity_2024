@@ -1,16 +1,21 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
-public class CameraFollow : MonoBehaviour
-{
-public float followspeed = 2f;
-public float yoff = 1f;
-    public Transform target;
+public class CameraFollow : MonoBehaviour {
+	
+	public float followspeed = 2f;
+	public float minY = 0;
+	public Transform target;
 
-    // Update is called once per frame
-    void Update()
-    {
-     Vector3 newPose = new Vector3(target.position.x,target.position.y + yoff, -10f);
-        transform.position = Vector3.Slerp(transform.position, newPose, followspeed * Time.deltaTime);
-    }
+	private void Start() {
+		if (!target) {
+			Debug.LogWarning("No target set for CameraFollow", this);
+			enabled = false;
+		}
+	}
+
+	// Update is called once per frame
+	void Update() {
+		Vector3 newPose = new Vector3(target.position.x, Mathf.Clamp(target.position.y, minY, float.PositiveInfinity), -10f);
+		transform.position = Vector3.Slerp(transform.position, newPose, followspeed * Time.deltaTime);
+	}
 }
