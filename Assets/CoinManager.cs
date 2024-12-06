@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class CoinManager : MonoBehaviour
 {
@@ -12,8 +14,6 @@ public class CoinManager : MonoBehaviour
 
     void Update()
     {
-        coinText.text = "Coins: " + coinCount.ToString();
+        coinText.text = coinCount.ToString();
     }
 }
-//onColissionTrigger trzeba dodac do gracza którego jeszcze nie ma
-//większość kodu bedzie w graczu , wiec jest tu troche pusto

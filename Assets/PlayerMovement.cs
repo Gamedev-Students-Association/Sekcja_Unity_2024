@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class temporaryplayer : MonoBehaviour
 {
+    public CoinManager coinManager;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Rigidbody2D rigidBody;
 
@@ -24,6 +25,14 @@ public class temporaryplayer : MonoBehaviour
         rigidBody.linearVelocity = new Vector2(move.x, rigidBody.linearVelocity.y);
 
         rigidBody.MovePosition(transform.position + move);
+    }
+    void onTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Coin")
+        {
+            Destroy(other.gameObject);
+            coinManager.coinCount++;
+        }
     }
 
 }
