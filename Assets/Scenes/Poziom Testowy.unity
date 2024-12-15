@@ -2337,7 +2337,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1483100632
 MonoBehaviour:
@@ -2355,6 +2355,13 @@ MonoBehaviour:
   speed: 8
   jumpSpeed: 10
   maxJumpHeight: 3
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  m_GroundCheck: {fileID: 0}
+  OnLandEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1580480024
 GameObject:
   m_ObjectHideFlags: 0
