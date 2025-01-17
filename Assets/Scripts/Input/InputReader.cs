@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "InputReader")]
@@ -17,7 +16,11 @@ public class InputReader : ScriptableObject, PlayerInput.IGameplayActions
             SetGameplay();
         }
     }
-    
+
+    private void OnDisable() {
+        DisableGameplay();
+    }
+
     public void SetGameplay()
     {
         _playerInput.Gameplay.Enable();
