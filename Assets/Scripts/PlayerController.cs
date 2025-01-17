@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask m_WhatIsGround;
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    [SerializeField] private UIManager uiManager;
 
     private Rigidbody2D m_Rigidbody2D;
     private Vector2 _moveDirection; // leaving is as vec2 instead of axis bc i assume the y axis can be useful in other interactions
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private float _currentJumpHeight = 0.0f;
     
 	private bool m_Grounded;            // Whether or not the player is grounded.
+    
+    private int coins;
 
     public UnityEvent OnLandEvent;
 
@@ -47,6 +50,16 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody2D.MovePosition(transform.position + (Vector3)_currentMove);
         _currentMove = Vector2.zero;
         GroundCheck();
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            coins++;
+            uiManager.UpdateCoinDisplay(coins);
+            Destroy(other.gameObject);
+        }
     }
 
     private void GroundCheck() {
